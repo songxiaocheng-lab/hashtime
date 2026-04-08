@@ -1,0 +1,16 @@
+# ====== Project ======
+
+.idea/
+
+# ====== [Rust] ======
+
+target/
+
+# ====== [Python] ======
+
+hashtime-py/.pytest_cache/
+hashtime-py/hashtime/__pycache__/
+hashtime-py/hashtime/*.so
+hashtime-py/hashtime/*.dylib
+hashtime-py/hashtime/*.dSYM/
+**/__pycache__/

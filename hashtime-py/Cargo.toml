@@ -1,0 +1,12 @@
+[lib]
+name = "hashtime_py"
+crate-type = ["cdylib"]
+
+[package]
+name = "hashtime-py"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+pyo3 = { version = "0.28"}
+hashtime = { path = "../hashtime" }
