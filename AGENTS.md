@@ -1,10 +1,10 @@
-# Agents.md
+# AGENTS.md
 
 ## Code Style
 
 ### Formatting (cargo fmt)
 
-Run `cargo fmt` before committing.
+Always run `cargo fmt` after modifying Rust code to ensure style compliance.
 
 ### No Duplicate Code
 
