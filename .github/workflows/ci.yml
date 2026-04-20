@@ -120,9 +120,12 @@ jobs:
       - name: Install maturin
         run: pip install maturin pytest
 
-      - name: Build and Install Module
+      - name: Build wheel
         working-directory: hashtime-py
-        run: maturin develop
+        run: maturin build --release
+
+      - name: Install wheel
+        run: pip install --find-links target/wheels hashtime
 
       - name: Run Python tests
         working-directory: hashtime-py
