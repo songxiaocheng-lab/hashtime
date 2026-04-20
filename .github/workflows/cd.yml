@@ -18,6 +18,8 @@ jobs:
     environment:
       name: crates-io
       url: https://crates.io/crates/hashtime
+    env:
+      CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
     permissions:
       id-token: write
@@ -29,16 +31,14 @@ jobs:
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: stable
 
       - name: Publish hashtime
         working-directory: hashtime
-        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }} --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git"
+        run: cargo publish --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git"
 
       - name: Publish hashtime-cli
         working-directory: hashtime-cli
-        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }} --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git"
+        run: cargo publish --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git"
 
   publish-pypi:
     name: Publish to PyPI
