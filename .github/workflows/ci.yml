@@ -76,14 +76,6 @@ jobs:
         working-directory: hashtime
         run: cargo test --release
 
-        # shell: bash
-        # run: |
-        #   if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-        #     sudo -E env "PATH=$PATH" cargo test --release
-        #   else
-        #     cargo test --release
-        #   fi
-
       - name: Test CLI
         working-directory: hashtime-cli
         run: cargo test --release
