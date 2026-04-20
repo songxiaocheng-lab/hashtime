@@ -61,9 +61,6 @@ jobs:
 
       - name: Cache build
         uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: "test-${{ runner.os }}-${{ matrix.os }}"
-          cache-targets: true
 
       - name: Install debugfs
         if: runner.os == 'Linux'
