@@ -1,5 +1,6 @@
 # hashtime
 
+[![Crates.io](https://img.shields.io/crates/v/hashtime.svg)](https://crates.io/crates/hashtime)
 [![PyPI version](https://img.shields.io/pypi/v/hashtime.svg)](https://pypi.org/project/hashtime/)
 [![CI](https://github.com/songxiaocheng/hashtime/actions/workflows/ci.yml/badge.svg)](https://github.com/songxiaocheng/hashtime/actions/workflows/ci.yml)
 [![Rust](https://img.shields.io/badge/rust-1.80%2B-blue.svg)](https://www.rust-lang.org)
