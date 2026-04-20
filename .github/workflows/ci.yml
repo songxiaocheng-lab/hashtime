@@ -89,9 +89,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y e2fsprogs
 
       - name: Test birthtime (requires root for debugfs)
-        shell: sudo bash {0}
         working-directory: hashtime
-        run: cargo test --release -- --ignored
+        run: cargo test --release --no-run; sudo -E env "PATH=$PATH" cargo test --release
 
   doc:
     name: Docs
