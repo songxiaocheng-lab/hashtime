@@ -66,19 +66,16 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y e2fsprogs
 
-      - name: Build core
-        working-directory: hashtime
-        run: cargo build --release
-
       - name: Test core
         working-directory: hashtime
-        shell: bash
-        run: |
-          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-            sudo -E env "PATH=$PATH" cargo test --release
-          else
-            cargo test --release
-          fi
+        run: cargo test --release
+        # shell: bash
+        # run: |
+        #   if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+        #     sudo -E env "PATH=$PATH" cargo test --release
+        #   else
+        #     cargo test --release
+        #   fi
 
       - name: Test CLI
         working-directory: hashtime-cli
