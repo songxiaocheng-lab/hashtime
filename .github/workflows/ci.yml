@@ -69,7 +69,7 @@ jobs:
       - name: Test core on Linux
         if: runner.os == 'Linux'
         working-directory: hashtime
-        run: sudo -E env "PATH=$PATH" cargo test --release
+        run: cargo test --release --no-run; sudo -E env "PATH=$PATH" cargo test --release
 
       - name: Test core on non-Linux
         if: runner.os != 'Linux'
