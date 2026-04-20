@@ -30,13 +30,11 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Publish hashtime
-        working-directory: hashtime
-        run: cargo publish --index "https://dl.cloudsmith.io/ZTJyngw3x1LSgqsA/sxc/hashtime/cargo/index.git" --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
-
-      - name: Publish hashtime-cli
-        working-directory: hashtime-cli
-        run: cargo publish --index "https://dl.cloudsmith.io/ZTJyngw3x1LSgqsA/sxc/hashtime/cargo/index.git" --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      - name: Publish to Cloudsmith
+        run: |
+          cargo publish -p hashtime -p hashtime-cli \
+            --index "https://dl.cloudsmith.io/ZTJyngw3x1LSgqsA/sxc/hashtime/cargo/index.git" \
+            --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
   publish-pypi:
     name: Publish to PyPI

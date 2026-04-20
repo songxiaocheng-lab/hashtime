@@ -88,7 +88,7 @@ jobs:
         run: cargo publish --dry-run
 
   test-linux-set-birthtime:
-    name: Test setting birthtime with debugfs on Linux
+    name: Test Setting Birthtime with debugfs on Linux
     runs-on: ubuntu-latest
     needs: test
 
