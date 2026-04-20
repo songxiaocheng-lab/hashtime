@@ -8,8 +8,8 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  run-ci:
-    uses: ./.github/workflows/ci.yml
+  # run-ci:
+  #   uses: ./.github/workflows/ci.yml
 
   publish-crates:
     name: Publish to crates.io
@@ -21,6 +21,7 @@ jobs:
 
     permissions:
       id-token: write
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -49,6 +50,7 @@ jobs:
 
     permissions:
       id-token: write
+      contents: read
 
     steps:
       - name: Download all wheels
