@@ -4,9 +4,6 @@ members = ["hashtime", "hashtime-cli", "hashtime-py"]
 
 [workspace.package]
 version = "0.1.0"
-readme = "README.md"
-license = "MIT"
-license-file = "LICENSE"
 homepage = "https://github.com/songxiaocheng/hashtime"
 
 [workspace.dependencies]
