@@ -6,7 +6,7 @@ members = ["hashtime", "hashtime-cli", "hashtime-py"]
 version = "0.1.0"
 
 [workspace.dependencies]
-hashtime = { path = "hashtime" }
+hashtime = { path = "hashtime", version = "0.1.0" }
 anyhow = "1.0"
 assert_cmd = "2.0"
 atty = "0.2"
