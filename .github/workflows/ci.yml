@@ -110,7 +110,7 @@ jobs:
           RUSTDOCFLAGS: -D warnings
 
   test-python:
-    name: Python Test (${{ matrix.os }})
+    name: Python Test (${{ matrix.os }}-py${{ matrix.python }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -130,7 +130,10 @@ jobs:
       - name: Cache pip packages
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pip
+          path: |
+            ~/.cache/pip
+            ~/Library/Caches/pip
+            ~\AppData\Local\pip\Cache
           key: pip-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('hashtime-py/Cargo.toml') }}
           restore-keys: |
             pip-${{ runner.os }}-py${{ matrix.python }}-
@@ -216,6 +219,28 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/Library/Caches/pip
+            ~\AppData\Local\pip\Cache
+          key: pip-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('python/Cargo.toml') }}
+          restore-keys: |
+            pip-${{ runner.os }}-py${{ matrix.python }}-
+            pip-${{ runner.os }}-
+
+      - name: Cache maturin build
+        uses: actions/cache@v4
+        with:
+          path: target
+          key: wheel-${{ runner.os }}-py${{ matrix.python }}-rust${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            wheel-${{ runner.os }}-py${{ matrix.python }}-rust
+            wheel-${{ runner.os }}-py${{ matrix.python }}-
+            wheel-${{ runner.os }}-
 
       - name: Build wheel
         uses: PyO3/maturin-action@v1
