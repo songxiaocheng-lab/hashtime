@@ -64,6 +64,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://python.cloudsmith.io/sxc/hashtime/
+          password: ${{ secrets.CLOUDSMITH_API_KEY }}
 
   publish-github:
     name: Publish to GitHub Release
@@ -77,8 +78,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Extract custom changelog
-        id: custom_changelog
+      - name: Extract changelog
+        id: extract-changelog
         uses: ffurrer2/extract-release-notes@v3
 
       - name: Download all binaries
@@ -92,4 +93,4 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           files: artifacts/**/*
-          body: ${{ steps.custom_changelog.outputs.body }}
+          body: ${{ steps.extract-changelog.outputs.release_notes }}
