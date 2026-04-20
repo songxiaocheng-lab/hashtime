@@ -79,7 +79,7 @@ jobs:
       - name: Test core on Windows
         if: runner.os == 'Windows'
         working-directory: hashtime
-        run: cargo build --release && cargo test --release
+        run: cargo test --release
         # shell: bash
         # run: |
         #   if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
