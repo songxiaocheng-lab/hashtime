@@ -10,9 +10,10 @@ A high-performance Rust library for generating and comparing file hashes and tim
 
 ## Features
 
+- **Parallel processing**: Uses Rust's rayon for efficient parallel file processing
+- **Output formats**: text, JSON, JSONL, CSV
 - **Multi-algorithm hashing**: MD5, SHA1, SHA256, SHA512
 - **Cross-platform timestamps**: Birth time (macOS/Windows), modification time
-- **Parallel processing**: Uses Rust's rayon for efficient parallel file processing
 - **Comparison**: Compare file states and detect changes
 - **Time restoration**: Restore file timestamps from saved results
 - **CLI**: Command-line interface for quick operations

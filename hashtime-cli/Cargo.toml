@@ -1,6 +1,6 @@
 [package]
 name = "hashtime-cli"
-version = "0.1.0"
+version.workspace = true
 edition = "2024"
 
 [[bin]]
@@ -8,15 +8,15 @@ name = "hashtime"
 path = "src/main.rs"
 
 [dev-dependencies]
-assert_cmd = "2.0"
-tempfile = "3.15"
+assert_cmd.workspace = true
+tempfile.workspace = true
 
 [dependencies]
-hashtime = { path = "../hashtime" }
-clap = { version = "4.6", features = ["derive"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-csv = "1.4"
-anyhow = "1.0"
-termcolor = "1.4"
-atty = "0.2"
+hashtime.workspace = true
+clap.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+csv.workspace = true
+anyhow.workspace = true
+termcolor.workspace = true
+atty.workspace = true
