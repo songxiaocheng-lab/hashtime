@@ -261,7 +261,7 @@ mod tests {
     }
 
     #[test]
-    #[cfg_attr(target_os = "linux", serial)]
+    #[cfg_attr(target_os = "linux", serial, ignore = "requires root and debugfs on linux")]
     fn test_set_times_birthtime() {
         let dir = tempdir().unwrap();
         let file_path = dir.path().join("test.txt");
@@ -313,7 +313,7 @@ mod tests {
     }
 
     #[test]
-    #[cfg_attr(target_os = "linux", serial)]
+    #[cfg_attr(target_os = "linux", serial, ignore = "requires root and debugfs on linux")]
     fn test_set_times_both_birthtime_before_mtime() {
         let dir = tempdir().unwrap();
         let file_path = dir.path().join("test.txt");
@@ -336,7 +336,7 @@ mod tests {
     }
 
     #[test]
-    #[cfg_attr(target_os = "linux", serial)]
+    #[cfg_attr(target_os = "linux", serial, ignore = "requires root and debugfs on linux")]
     fn test_set_times_both_birthtime_after_mtime() {
         let dir = tempdir().unwrap();
         let file_path = dir.path().join("test.txt");
