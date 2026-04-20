@@ -61,10 +61,17 @@ jobs:
 
       - name: Cache build
         uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: "test-${{ runner.os }}-${{ matrix.os }}"
+          cache-targets: true
 
       - name: Install debugfs
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y e2fsprogs
+
+      - name: Build core
+        working-directory: hashtime
+        run: cargo build --release
 
       - name: Test core
         working-directory: hashtime
