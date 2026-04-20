@@ -70,6 +70,23 @@ jobs:
         working-directory: hashtime-cli
         run: cargo test --release
 
+  publish-crates-dry-run:
+    name: Cargo Publish Dry-Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Dry-run publish
+        run: cargo publish --dry-run
+
   test-linux-set-birthtime:
     name: Test setting birthtime with debugfs on Linux
     runs-on: ubuntu-latest
