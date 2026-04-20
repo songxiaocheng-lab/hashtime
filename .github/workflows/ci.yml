@@ -66,9 +66,17 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y e2fsprogs
 
-      - name: Test core
+      - name: Test core on Ubuntu
+        working-directory: hashtime
+        run: cargo build --release && sudo -E env "PATH=$PATH" cargo test --release
+
+      - name: Test core on macOS
         working-directory: hashtime
         run: cargo test --release
+
+      - name: Test core on Windows
+        working-directory: hashtime
+        run: cargo build --release && cargo test --release
         # shell: bash
         # run: |
         #   if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
