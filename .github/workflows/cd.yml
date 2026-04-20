@@ -32,11 +32,11 @@ jobs:
 
       - name: Publish hashtime
         working-directory: hashtime
-        run: cargo publish --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git" --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish --index "https://dl.cloudsmith.io/ZTJyngw3x1LSgqsA/sxc/hashtime/cargo/index.git" --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
       - name: Publish hashtime-cli
         working-directory: hashtime-cli
-        run: cargo publish --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git" --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish --index "https://dl.cloudsmith.io/ZTJyngw3x1LSgqsA/sxc/hashtime/cargo/index.git" --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
   publish-pypi:
     name: Publish to PyPI
