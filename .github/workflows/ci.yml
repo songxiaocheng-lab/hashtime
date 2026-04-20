@@ -217,39 +217,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python }}
-
-      - name: Cache pip packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: pip-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('python/Cargo.toml') }}
-          restore-keys: |
-            pip-${{ runner.os }}-py${{ matrix.python }}-
-            pip-${{ runner.os }}-
-
-      - name: Cache maturin build
-        uses: actions/cache@v4
-        with:
-          path: target
-          key: wheel-${{ runner.os }}-py${{ matrix.python }}-rust${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            wheel-${{ runner.os }}-py${{ matrix.python }}-rust
-            wheel-${{ runner.os }}-py${{ matrix.python }}-
-            wheel-${{ runner.os }}-
-
-      - name: Install maturin
-        run: pip install maturin
-
       - name: Build wheel
-        working-directory: hashtime-py
-        run: maturin build --release
+        uses: PyO3/maturin-action@v1
+        with:
+          args: --release -i python${{ matrix.python }}
+          working-directory: hashtime-py
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4
