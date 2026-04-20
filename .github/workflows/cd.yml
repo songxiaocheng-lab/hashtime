@@ -18,8 +18,6 @@ jobs:
     environment:
       name: crates-io
       url: https://crates.io/crates/hashtime
-    env:
-      CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
     permissions:
       id-token: write
@@ -34,11 +32,11 @@ jobs:
 
       - name: Publish hashtime
         working-directory: hashtime
-        run: cargo publish --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git"
+        run: cargo publish --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git" --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
       - name: Publish hashtime-cli
         working-directory: hashtime-cli
-        run: cargo publish --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git"
+        run: cargo publish --index "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git" --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
   publish-pypi:
     name: Publish to PyPI
