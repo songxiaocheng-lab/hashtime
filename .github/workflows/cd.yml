@@ -33,7 +33,7 @@ jobs:
       - name: Configure Cloudsmith registry
         run: |
           mkdir -p ~/.cargo
-          printf '[registries.sxc-hashtime]\nindex = "sparse+https://cargo.cloudsmith.io/sxc/hashtime/"\ntoken = "Token ZTJyngw3x1LSgqsA"\ncredential-provider = "cargo:token"\n' > ~/.cargo/config.toml
+          printf '[registries]\nsxc-hashtime = { index = "https://dl.cloudsmith.io/basic/sxc/hashtime/cargo/index.git" }\n[registries.sxc-hashtime]\nindex = "sparse+https://cargo.cloudsmith.io/sxc/hashtime/"\ntoken = "Token ${{ secrets.CARGO_REGISTRY_TOKEN }}"\ncredential-provider = "cargo:token"\n' > ~/.cargo/config.toml
 
       - name: Publish hashtime
         working-directory: hashtime
