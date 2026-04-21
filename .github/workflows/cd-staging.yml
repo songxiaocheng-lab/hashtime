@@ -1,0 +1,77 @@
+name: CD
+
+on:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  run-ci:
+    uses: ./.github/workflows/ci.yml
+
+  publish-crates-cloudsmith:
+    name: Publish to crates.io
+    needs: run-ci
+    runs-on: ubuntu-latest
+    environment:
+      name: cloudsmith
+      url: https://app.cloudsmith.com/sxc/r/hashtime
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Configure Cloudsmith registry
+        run: |
+          mkdir -p ~/.cargo
+          cat <<EOF > ~/.cargo/config.toml
+          [source.crates-io]
+          replace-with = "sxc-hashtime"
+          
+          [registries.sxc-hashtime]
+          index = "sparse+https://cargo.cloudsmith.io/sxc/hashtime/"
+          token = "Token ${{ secrets.CARGO_REGISTRY_TOKEN }}"
+          credential-provider = "cargo:token"  
+          EOF
+
+      - name: Publish hashtime
+        working-directory: hashtime
+        run: cargo publish --registry sxc-hashtime
+
+      - name: Publish hashtime-cli
+        working-directory: hashtime-cli
+        run: cargo publish --registry sxc-hashtime --no-verify
+
+  publish-pypi-cloudsmith:
+    name: Publish to PyPI
+    needs: run-ci
+    runs-on: ubuntu-latest
+    environment:
+      name: cloudsmith
+      url: https://app.cloudsmith.com/sxc/r/hashtime
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Download all wheels
+        uses: actions/download-artifact@v8
+        with:
+          path: dist
+          pattern: wheel-*
+          merge-multiple: true
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://python.cloudsmith.io/sxc/hashtime/
+          password: ${{ secrets.CLOUDSMITH_API_KEY }}

@@ -1,0 +1,101 @@
+name: CD
+
+on:
+  push:
+    tags: ['v*']
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  run-ci:
+    uses: ./.github/workflows/ci.yml
+
+  publish-crates:
+    name: Publish to crates.io
+    needs: run-ci
+    runs-on: ubuntu-latest
+    environment:
+      name: crates-io
+      url: https://crates.io/crates/hashtime
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Publish hashtime
+        working-directory: hashtime
+        run: cargo publish
+
+      - name: Publish hashtime-cli
+        working-directory: hashtime-cli
+        run: cargo publish
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: run-ci
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/hashtime/
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Download all wheels
+        uses: actions/download-artifact@v8
+        with:
+          path: dist
+          pattern: wheel-*
+          merge-multiple: true
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  publish-github:
+    name: Publish to GitHub Release
+    needs: run-ci
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Extract changelog
+        id: extract-changelog
+        uses: ffurrer2/extract-release-notes@v3
+
+      - name: Check for Prerelease
+        id: check_prerelease
+        run: |
+          if [[ "${{ github.ref_name }}" == *-* ]]; then
+            echo "is_prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_prerelease=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Download all binaries
+        uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+          pattern: release-*
+          merge-multiple: true
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: artifacts/**/*
+          body: ${{ steps.extract-changelog.outputs.release_notes }}
+          prerelease: ${{ steps.check_prerelease.outputs.is_prerelease }}
